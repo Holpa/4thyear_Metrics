@@ -9,21 +9,15 @@ public class Main {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		SQLmanager db = new SQLmanager();
-		db.connectToDB();
-        db.readData();
-        db.close();
+		LinuxTerminal lT= new LinuxTerminal();
+		lT.getIP();
 		Timer timer = new Timer();
 		Gui window = new Gui();
 		timer.schedule(new DBinvoker(window), 0, 5000);
-
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					
 					window.getFrame().setVisible(true);
-					//window.setJtext_2(Integer.toString(db.getValue()));
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -31,30 +25,39 @@ public class Main {
 		});
 	}
 }	
-	class DBinvoker extends TimerTask{
-		Gui window;
-		public DBinvoker(Gui window) {
-			this.window = window;
-		}
 
-		public void run() {
-			SQLmanager db = new SQLmanager();
-			 try {
-				db.connectToDB();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	         try {
-				db.readData();
-				window.setJtext_2(Integer.toString(db.getValue()));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	         //db.insertData();
-	         db.close();
-	         System.out.print(db.getValue());
-		    }
+class DBinvoker extends TimerTask{
+	Gui window;
+	public DBinvoker(Gui window) {
+		this.window = window;
 	}
+
+	public void run() {
+		SQLmanager db = new SQLmanager();
+		try {
+			db.connectToDB();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			db.readData();
+			window.setJtext(Integer.toString(db.getLoadValue()));
+			window.setJtext_2(Integer.toString(db.getRamValue()));
+			window.setJtext_3(Integer.toString(db.getTempValue()));
+			window.setJtext_4(Integer.toString(db.getDisValue()));
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		try {
+			db.insertData();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		db.close();
+
+	}
+}
 

@@ -109,9 +109,24 @@ public class Gui {
 	{
 		return this.frmPi;
 	}
+	public void setJtext(String s) {
+		// TODO Auto-generated method stub
+		this.txtX.setText(s);
+	}
+	
 	public void setJtext_2(String s)
 	{
+		this.txtX_1.setText(s);
+	}
+
+	public void setJtext_3(String s) {
+		// TODO Auto-generated method stub
 		this.txtX_2.setText(s);
+	}
+
+	public void setJtext_4(String s) {
+		// TODO Auto-generated method stub
+		this.txtX_3.setText(s);
 	}
 
 }
