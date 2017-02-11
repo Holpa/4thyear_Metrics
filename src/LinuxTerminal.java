@@ -3,6 +3,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+/**
+ * test test
+ * @author Ahmad
+ *
+ */
 public class LinuxTerminal {
 
 	public String WindowsGetIP() throws IOException
