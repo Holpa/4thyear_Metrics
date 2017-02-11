@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 
 public class LinuxTerminal {
 
-	public String getIP() throws IOException
+	public String WindowsGetIP() throws IOException
 	{
 		String g = "";
 		Process p = Runtime.getRuntime().exec(new String[] {"ipconfig", g});

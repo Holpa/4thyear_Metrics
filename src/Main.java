@@ -10,7 +10,7 @@ public class Main {
 	 */
 	public static void main(String[] args) throws Exception {
 		LinuxTerminal lT= new LinuxTerminal();
-		lT.getIP();
+		lT.WindowsGetIP();
 		Timer timer = new Timer();
 		Gui window = new Gui();
 		timer.schedule(new DBinvoker(window), 0, 5000);
