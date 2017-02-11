@@ -2,7 +2,14 @@ import java.awt.EventQueue;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
+/**
+ * to do:
+ * exceptions related to DB connections
+ * add snapshot feature
+ * do Linux Commands.
+ * @author Ahmad
+ *
+ */
 public class Main {
 	/**
 	 * Launch the application.
