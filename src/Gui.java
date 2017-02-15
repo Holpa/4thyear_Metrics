@@ -177,10 +177,6 @@ public class Gui {
 					}
 				});
 				panel.add(btnSubscribe);
-		
-				btnCreateDiscriptorContainer = new JButton("Create Discriptor Container");
-				btnCreateDiscriptorContainer.setEnabled(false);
-				panel.add(btnCreateDiscriptorContainer);
 		panel.add(btnTest);
 
 		btnDiscoverResourceBy = new JButton("Discover Resource by label");
@@ -221,6 +217,10 @@ public class Gui {
 							}
 						});
 						panel.add(btnCreateADescriotion);
+						
+								btnCreateDiscriptorContainer = new JButton("Create Discriptor Container");
+								btnCreateDiscriptorContainer.setEnabled(false);
+								panel.add(btnCreateDiscriptorContainer);
 	}
 	public JFrame getFrame()
 	{
