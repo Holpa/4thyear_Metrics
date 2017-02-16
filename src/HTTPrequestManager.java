@@ -11,6 +11,7 @@ import java.net.URL;
 
 public class HTTPrequestManager {
 
+	private int Value= 2000;
 	/*
 	public static void main(String[] args) throws Exception {
 
@@ -60,50 +61,61 @@ public class HTTPrequestManager {
 	}
 
 	// HTTP POST request
-	public void createSensor() throws Exception {
+	public void createSensor(boolean unlimited) throws Exception {
 
-		String url = "http://127.0.0.1:8080/~/in-cse";
-		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-		int responseCode=0;
-		//add reuqest header
-		con.setRequestMethod("POST");
-		con.setRequestProperty("X-M2M-Origin", "admin:admin");
-		con.setRequestProperty("Content-Type", "application/xml;ty=2");
-
-		String urlParameters = "<m2m:ae xmlns:m2m="+"\"http://www.onem2m.org/xml/protocols\""+" rn="+"\"MY_SENSOR\" >"
-				+"<api>app-sensor</api>"
-				+"<lbl>Type/sensor Category/temperature Location/home</lbl>"
-				+"<rr>false</rr>"
-				+"</m2m:ae>";
-		con.setRequestProperty("Content-Length", Integer.toString(urlParameters.length()));
-		// Send post request
-		con.setDoOutput(true);
-		con.setDoInput(true);
-		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-		con.getOutputStream().write(urlParameters.getBytes("UTF8"));
-		//wr.write(urlParameters.getBytes("UTF-8"));
-		wr.flush();
-		wr.close();
-		responseCode = con.getResponseCode();
-		writeFile("createSensor","Error Occured with code of"+responseCode+"\n ");
-		System.out.println("\nSending 'POST' request to URL : " + url);
-		System.out.println("Post parameters : " + urlParameters);
-		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(con.getInputStream()));
-		String inputLine;
-		StringBuffer response = new StringBuffer();
-
-		while ((inputLine = in.readLine()) != null) {
-			response.append(inputLine);
+		
+		if(!unlimited)
+		{
+			this.Value = 1;
 		}
-		in.close();
+		for(int i=0; i< Value ; i++)
+		{
+			String url = "http://127.0.0.1:8080/~/in-cse";
+			URL obj = new URL(url);
+			HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			int responseCode=0;
+			//add reuqest header
 
-		//print result
-		writeFile("createSensor",response.toString());
-		System.out.println(response.toString());
+			con.setRequestMethod("POST");
+			con.setRequestProperty("X-M2M-Origin", "admin:admin");
+			con.setRequestProperty("Content-Type", "application/xml;ty=2");
+			String urlParameters = "<m2m:ae xmlns:m2m="+"\"http://www.onem2m.org/xml/protocols\""+" rn="+"\"MY_SENSOR2\" >"
+					+"<api>app-sensor</api>"
+					+"<lbl>Type/sensor Category/temperature Location/home</lbl>"
+					+"<rr>false</rr>"
+					+"</m2m:ae>";
+			con.setRequestProperty("Content-Length", Integer.toString(urlParameters.length()));
+			// Send post request
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+			con.getOutputStream().write(urlParameters.getBytes("UTF8"));
+			//wr.write(urlParameters.getBytes("UTF-8"));
+			wr.flush();
+			wr.close();
+			responseCode = con.getResponseCode();
+			System.out.println("\nSending 'POST' request to URL : " + url);
+			System.out.println("Post parameters : " + urlParameters);
+			System.out.println("Response Code : " + responseCode);
+			if(responseCode == 201)
+			{
+				BufferedReader in = new BufferedReader(
+						new InputStreamReader(con.getInputStream()));
+				String inputLine;
+				StringBuffer response = new StringBuffer();
+
+				while ((inputLine = in.readLine()) != null) {
+					response.append(inputLine);
+				}
+
+				in.close();
+				writeFile("createSensor",response.toString());
+			}else
+			{
+				writeFile("createSensor","response Code with ERROR: "+responseCode);
+			}
+
+		}
 
 	}
 	public void discoverResourcesBasedOnLabel() throws Exception {
@@ -139,22 +151,22 @@ public class HTTPrequestManager {
 
 	public void writeFile(String filename, String Data)
 	{
-		
+
 		try(FileWriter fw = new FileWriter(filename+".txt", true);
-			    BufferedWriter bw = new BufferedWriter(fw);
-			    PrintWriter out = new PrintWriter(bw))
-			{
-			    out.println("\n \n"+Data);
-			} catch (IOException e) {
-			    //exception handling left as an exercise for the reader
-				try{
-					PrintWriter writer = new PrintWriter(filename+".txt", "UTF-8");
-					writer.println(Data);
-					writer.close();
-				} catch (IOException ei) {
-					// do something
-				}
+				BufferedWriter bw = new BufferedWriter(fw);
+				PrintWriter out = new PrintWriter(bw))
+		{
+			out.println("\n \n"+Data);
+		} catch (IOException e) {
+			//exception handling left as an exercise for the reader
+			try{
+				PrintWriter writer = new PrintWriter(filename+".txt", "UTF-8");
+				writer.println(Data);
+				writer.close();
+			} catch (IOException ei) {
+				// do something
 			}
+		}
 
 	}
 

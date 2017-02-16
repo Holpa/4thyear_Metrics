@@ -17,6 +17,7 @@ import javax.swing.JSpinner;
 import javax.swing.JMenuBar;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.JCheckBox;
 
 public class Gui {
 
@@ -38,6 +39,7 @@ public class Gui {
 	private JButton btnCreateAData;
 	private JButton btnCreateAData_1;
 	private JButton btnSubscribe;
+	private JCheckBox chckbxUnlimitedSignals;
 
 
 
@@ -130,11 +132,12 @@ public class Gui {
 								HTTPrequestManager http = new HTTPrequestManager();
 								System.out.println("Testing  - Send Http POST request");
 								try {
-									http.createSensor();
+									http.createSensor(chckbxUnlimitedSignals.isSelected());
 								} catch (Exception f) {
 									// TODO Auto-generated catch block
 									f.printStackTrace();
 								}
+								
 							}
 						});
 						panel.add(btnTest_1);
@@ -221,6 +224,9 @@ public class Gui {
 								btnCreateDiscriptorContainer = new JButton("Create Discriptor Container");
 								btnCreateDiscriptorContainer.setEnabled(false);
 								panel.add(btnCreateDiscriptorContainer);
+								
+								chckbxUnlimitedSignals = new JCheckBox("Unlimited signals");
+								panel.add(chckbxUnlimitedSignals);
 	}
 	public JFrame getFrame()
 	{
